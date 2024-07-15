@@ -8,16 +8,38 @@ class QuestionProvider extends ChangeNotifier {
   bool _isLoading = false;
   String _error = '';
   Question? _currentQuestion;
+  final List<Question> _questions = [];
+  static const int _maxQuestionCount = 5;
+  static const int _scorePerQuestion = 20;
 
   bool get isLoading => _isLoading;
   String get error => _error;
   Question? get currentQuestion => _currentQuestion;
+  List<Question> get questions => _questions;
+  int get maxQuestionCount => _maxQuestionCount;
+  int get scorePerQuestion => _scorePerQuestion;
+  int get currentScore =>
+      _questions.where((q) => q.solution == q.solutionOfUser).length *
+      scorePerQuestion;
+  int get fullScore => _scorePerQuestion * _maxQuestionCount;
 
   QuestionProvider() {
-    fetchQuestion();
+    fetchNextQuestion();
   }
 
-  Future<void> fetchQuestion() async {
+  void finishQuiz() {}
+
+  Future<void> fetchNextQuestion({Function? onFinish}) async {
+    if (_currentQuestion != null) {
+      _questions.add(_currentQuestion!);
+    }
+    if (maxQuestionCount == questions.length) {
+      if (onFinish != null) {
+        onFinish();
+      }
+      finishQuiz();
+      return;
+    }
     _isLoading = true;
     final response =
         await http.get(Uri.parse('https://marcconrad.com/uob/smile/api.php'));

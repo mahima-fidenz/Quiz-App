@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/providers/question_provider.dart';
 
 class KeypadWidget extends StatefulWidget {
   const KeypadWidget({super.key});
@@ -16,8 +19,6 @@ class _KeypadWidgetState extends State<KeypadWidget> {
       input = value;
     });
   }
-
-  void onSubmit() {}
 
   Widget buildButton(String value) {
     return SizedBox.expand(
@@ -36,6 +37,8 @@ class _KeypadWidgetState extends State<KeypadWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var questionProvider = context.watch<QuestionProvider>();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: LayoutGrid(
@@ -62,7 +65,30 @@ class _KeypadWidgetState extends State<KeypadWidget> {
           buildButton('0').inGridArea('zero'),
           SizedBox.expand(
               child: ElevatedButton(
-            onPressed: input.isNotEmpty ? onSubmit : null,
+            onPressed: input.isNotEmpty
+                ? () {
+                    questionProvider.currentQuestion?.solutionOfUser =
+                        int.parse(input);
+                    if (questionProvider.currentQuestion?.solution.toString() ==
+                        input) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          duration: Duration(milliseconds: 400),
+                          content: Text('Correct Answer!')));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          duration: const Duration(milliseconds: 400),
+                          content: Text(
+                              'Your Answer: $input. Correct Answer: ${questionProvider.currentQuestion?.solution.toString()}')));
+                    }
+                    questionProvider.fetchNextQuestion(onFinish: () {
+                      context.go('/quizresult', extra: {
+                        'userScore': questionProvider.currentScore,
+                        'fullScore': questionProvider.fullScore
+                      });
+                    });
+                    input = '';
+                  }
+                : null,
             style: ElevatedButton.styleFrom(
                 disabledBackgroundColor: Colors.blue[100],
                 shape: RoundedRectangleBorder(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/providers/question_provider.dart';
+import 'package:quiz_app/widgets/quiz_screen_widgets/timer.dart';
 
 class QuestionWidget extends StatefulWidget {
   const QuestionWidget({
@@ -14,14 +16,27 @@ class QuestionWidget extends StatefulWidget {
 class QuestionWidgetState extends State<QuestionWidget> {
   @override
   Widget build(BuildContext context) {
-    var question = context.watch<QuestionProvider>();
-    if (question.isLoading) {
+    var questionProvider = context.watch<QuestionProvider>();
+    if (questionProvider.isLoading) {
       return const Center(child: CircularProgressIndicator());
-    } else if (question.error.isNotEmpty) {
-      return Center(child: Text(question.error));
+    } else if (questionProvider.error.isNotEmpty) {
+      return Center(child: Text(questionProvider.error));
     }
-    return (question.currentQuestion?.imageUrl) != null
-        ? Image.network(question.currentQuestion!.imageUrl)
+    return (questionProvider.currentQuestion?.imageUrl) != null
+        ? Column(
+            children: [
+              TimerWidget(
+                  durationMiliseconds: 45000,
+                  onTimerFinish: () {
+                    questionProvider.finishQuiz();
+                    context.go('/quizresult', extra: {
+                      'userScore': questionProvider.currentScore,
+                      'fullScore': questionProvider.fullScore
+                    });
+                  }),
+              Image.network(questionProvider.currentQuestion!.imageUrl),
+            ],
+          )
         : const Text("Could not load the question");
   }
 }

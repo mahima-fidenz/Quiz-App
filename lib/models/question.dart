@@ -2,10 +2,11 @@ class Question {
   final String _imageUrl;
   final int _solution;
 
+  int solutionOfUser = -1;
   String get imageUrl => _imageUrl;
   int get solution => _solution;
 
-  const Question({required String imageUrl, required int solution})
+  Question({required String imageUrl, required int solution, int? maxDuration})
       : _solution = solution,
         _imageUrl = imageUrl;
 

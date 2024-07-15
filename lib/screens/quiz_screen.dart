@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:quiz_app/providers/question_provider.dart';
 import 'package:quiz_app/widgets/quiz_screen_widgets/keypad.dart';
 import 'package:quiz_app/widgets/quiz_screen_widgets/question.dart';
+import 'package:quiz_app/widgets/quiz_screen_widgets/quiz_header.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -26,14 +27,7 @@ class _QuizScreenState extends State<QuizScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: SizedBox.expand(
-                    child: Placeholder(
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
+                Expanded(flex: 1, child: QuizHeaderWidget()),
                 Expanded(flex: 3, child: QuestionWidget()),
                 Expanded(flex: 4, child: KeypadWidget()),
               ],

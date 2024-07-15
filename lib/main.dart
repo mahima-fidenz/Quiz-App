@@ -4,6 +4,7 @@ import 'package:quiz_app/common/theme.dart';
 import 'package:quiz_app/screens/home_screen.dart';
 import 'package:quiz_app/screens/login_screen.dart';
 import 'package:quiz_app/screens/past_quizzes_screen.dart';
+import 'package:quiz_app/screens/quiz_completion_screen.dart';
 import 'package:quiz_app/screens/quiz_screen.dart';
 
 GoRouter router() {
@@ -27,6 +28,16 @@ GoRouter router() {
             builder: (context, state) => const PastQuizzesScreen(),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/quizresult',
+        builder: (context, state) {
+          Map<String, dynamic> extra = state.extra as Map<String, int>;
+          return QuizResultScreen(
+            userScore: extra['userScore'],
+            fullScore: extra['fullScore'],
+          );
+        },
       ),
     ],
   );
