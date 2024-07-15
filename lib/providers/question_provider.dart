@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:quiz_app/common/constatnts.dart';
 import 'package:quiz_app/models/question.dart';
 
 class QuestionProvider extends ChangeNotifier {
@@ -41,8 +42,7 @@ class QuestionProvider extends ChangeNotifier {
       return;
     }
     _isLoading = true;
-    final response =
-        await http.get(Uri.parse('https://marcconrad.com/uob/smile/api.php'));
+    final response = await http.get(Uri.parse(AppConstants.questionFetinchApi));
 
     try {
       if (response.statusCode == 200) {
