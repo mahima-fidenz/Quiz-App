@@ -49,14 +49,15 @@ class QuestionProvider extends ChangeNotifier {
         var json = jsonDecode(response.body) as Map<String, dynamic>;
         _currentQuestion = Question.fromJson(json);
         _error = '';
+        notifyListeners();
       } else {
+        notifyListeners();
         throw Exception("Failed to load the question");
       }
     } on Exception catch (e) {
       _error = e.toString();
     } finally {
       _isLoading = false;
-      notifyListeners();
     }
   }
 }
