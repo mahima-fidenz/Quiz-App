@@ -80,12 +80,17 @@ class _KeypadWidgetState extends State<KeypadWidget> {
                           content: Text(
                               'Your Answer: $input. Correct Answer: ${questionProvider.currentQuestion?.solution.toString()}')));
                     }
-                    questionProvider.fetchNextQuestion(onFinish: () {
+                    questionProvider.addCurrentQuestionToQuestions();
+                    if (questionProvider.maxQuestionCount ==
+                        questionProvider.currentQuestionCount) {
+                      questionProvider.finishQuiz(context);
                       context.go('/quizresult', extra: {
                         'userScore': questionProvider.currentScore,
                         'fullScore': questionProvider.fullScore
                       });
-                    });
+                    } else {
+                      questionProvider.fetchNextQuestion();
+                    }
                     input = '';
                   }
                 : null,

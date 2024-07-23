@@ -29,7 +29,7 @@ class QuestionWidgetState extends State<QuestionWidget> {
               TimerWidget(
                   durationMiliseconds: AppConstants.quizDuration,
                   onTimerFinish: () {
-                    questionProvider.finishQuiz();
+                    questionProvider.finishQuiz(context);
                     context.go('/quizresult', extra: {
                       'userScore': questionProvider.currentScore,
                       'fullScore': questionProvider.fullScore

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:quiz_app/common/constatnts.dart';
 import 'package:quiz_app/models/question.dart';
+import 'package:quiz_app/models/quiz.dart';
+import 'package:quiz_app/providers/firebase_provider.dart';
 
 class QuestionProvider extends ChangeNotifier {
   bool _isLoading = false;
@@ -18,6 +21,7 @@ class QuestionProvider extends ChangeNotifier {
   Question? get currentQuestion => _currentQuestion;
   List<Question> get questions => _questions;
   int get maxQuestionCount => _maxQuestionCount;
+  int get currentQuestionCount => _questions.length;
   int get scorePerQuestion => _scorePerQuestion;
   int get currentScore =>
       _questions.where((q) => q.solution == q.solutionOfUser).length *
@@ -28,19 +32,20 @@ class QuestionProvider extends ChangeNotifier {
     fetchNextQuestion();
   }
 
-  void finishQuiz() {}
-
-  Future<void> fetchNextQuestion({Function? onFinish}) async {
+  void addCurrentQuestionToQuestions() {
     if (_currentQuestion != null) {
       _questions.add(_currentQuestion!);
     }
-    if (maxQuestionCount == questions.length) {
-      if (onFinish != null) {
-        onFinish();
-      }
-      finishQuiz();
-      return;
-    }
+  }
+
+  void finishQuiz(BuildContext context) {
+    Provider.of<FirebaseProvider>(context, listen: false).addQuiz(Quiz(
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+        finalscore: currentScore,
+        fullscore: fullScore));
+  }
+
+  Future<void> fetchNextQuestion() async {
     _isLoading = true;
     final response = await http.get(Uri.parse(AppConstants.questionFetinchApi));
 
