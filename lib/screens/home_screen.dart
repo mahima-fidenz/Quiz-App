@@ -10,10 +10,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
           actions: [
             IconButton(
-              icon: const Icon(Icons.logout),
+              icon: const Icon(Icons.person),
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Logging out not supported yet.')));
+                context.go('/profile');
               },
             ),
           ],
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.go('/home/quiz');
+                        context.go('/quiz');
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -48,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.go('/home/pastquizzes');
+                        context.go('/pastquizzes');
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),

@@ -41,7 +41,7 @@ class QuizResultScreen extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
               onPressed: () {
-                context.go('/home');
+                context.go('/');
               },
               child: const Text('Return to Home'),
             ),
