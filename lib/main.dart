@@ -3,6 +3,7 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/common/route_constants.dart';
 import 'package:quiz_app/common/theme.dart';
 import 'package:quiz_app/firebase_options.dart';
 import 'package:quiz_app/providers/firebase_provider.dart';
@@ -15,25 +16,24 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const HomeScreen(),
       redirect: (context, state) {
         final isLoggedIn =
             Provider.of<FirebaseProvider>(context, listen: false).loggedIn;
         if (!isLoggedIn) {
-          return '/sign-in';
+          return RouteConstants.signInPath;
         }
         return null;
       },
       routes: [
         GoRoute(
-          path: 'sign-in',
+          path: RouteConstants.signInRelativePath,
           builder: (context, state) {
             return SignInScreen(
               loginViewKey: UniqueKey(),
               actions: [
                 ForgotPasswordAction(((context, email) {
                   final uri = Uri(
-                    path: '/sign-in/forgot-password',
+                    path: RouteConstants.forgotPasswordPath,
                     queryParameters: <String, String?>{
                       'email': email,
                     },
@@ -59,7 +59,7 @@ final _router = GoRouter(
                             'Please check your email to verify your email address'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
-                  context.pushReplacement('/');
+                  context.pushReplacement(RouteConstants.homePath);
                 })),
               ],
             );
@@ -78,36 +78,41 @@ final _router = GoRouter(
           ],
         ),
         GoRoute(
-          path: 'profile',
+          path: RouteConstants.profileRelativePath,
           builder: (context, state) {
             return ProfileScreen(
               providers: const [],
               actions: [
                 SignedOutAction((context) {
-                  context.go('/sign-in');
+                  context.go(RouteConstants.signInPath);
                 }),
               ],
             );
           },
         ),
         GoRoute(
-          path: 'quiz',
-          builder: (context, state) => const QuizScreen(),
-        ),
-        GoRoute(
-          path: 'pastquizzes',
-          builder: (context, state) => const PastQuizzesScreen(),
-        ),
-        GoRoute(
-          path: 'quizresult',
-          builder: (context, state) {
-            Map<String, dynamic> extra = state.extra as Map<String, int>;
-            return QuizResultScreen(
-              userScore: extra['userScore'],
-              fullScore: extra['fullScore'],
-            );
-          },
-        ),
+            path: RouteConstants.homeRelativePath,
+            builder: (context, state) => const HomeScreen(),
+            routes: [
+              GoRoute(
+                path: RouteConstants.quizRelativePath,
+                builder: (context, state) => const QuizScreen(),
+              ),
+              GoRoute(
+                path: RouteConstants.pastQuizzesRelativePath,
+                builder: (context, state) => const PastQuizzesScreen(),
+              ),
+              GoRoute(
+                path: RouteConstants.quizResultRelativePath,
+                builder: (context, state) {
+                  Map<String, dynamic> extra = state.extra as Map<String, int>;
+                  return QuizResultScreen(
+                    userScore: extra['userScore'],
+                    fullScore: extra['fullScore'],
+                  );
+                },
+              ),
+            ]),
       ],
     ),
   ],

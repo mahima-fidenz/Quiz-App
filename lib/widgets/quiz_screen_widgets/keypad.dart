@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/common/route_constants.dart';
 import 'package:quiz_app/providers/question_provider.dart';
 
 class KeypadWidget extends StatefulWidget {
@@ -84,7 +85,7 @@ class _KeypadWidgetState extends State<KeypadWidget> {
                     if (questionProvider.maxQuestionCount ==
                         questionProvider.currentQuestionCount) {
                       questionProvider.finishQuiz(context);
-                      context.go('/quizresult', extra: {
+                      context.go(RouteConstants.quizResultPath, extra: {
                         'userScore': questionProvider.currentScore,
                         'fullScore': questionProvider.fullScore
                       });

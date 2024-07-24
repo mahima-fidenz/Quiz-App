@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/common/constatnts.dart';
+import 'package:quiz_app/common/route_constants.dart';
 import 'package:quiz_app/providers/question_provider.dart';
 import 'package:quiz_app/widgets/quiz_screen_widgets/timer.dart';
 
@@ -30,7 +31,7 @@ class QuestionWidgetState extends State<QuestionWidget> {
                   durationMiliseconds: AppConstants.quizDuration,
                   onTimerFinish: () {
                     questionProvider.finishQuiz(context);
-                    context.go('/quizresult', extra: {
+                    context.go(RouteConstants.quizResultPath, extra: {
                       'userScore': questionProvider.currentScore,
                       'fullScore': questionProvider.fullScore
                     });

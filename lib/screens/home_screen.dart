@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_app/common/route_constants.dart';
 import 'package:quiz_app/providers/firebase_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.person),
               onPressed: () {
-                context.go('/profile');
+                context.go(RouteConstants.profilePath);
               },
             ),
           ],
@@ -38,7 +39,7 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.go('/quiz');
+                        context.go(RouteConstants.quizPath);
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -52,7 +53,7 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        context.go('/pastquizzes');
+                        context.go(RouteConstants.pastQuizzesPath);
                       },
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),

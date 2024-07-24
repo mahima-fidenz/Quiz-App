@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:quiz_app/common/route_constants.dart';
 
 class QuizResultScreen extends StatelessWidget {
   final int fullScore;
@@ -41,7 +42,7 @@ class QuizResultScreen extends StatelessWidget {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
               onPressed: () {
-                context.go('/');
+                context.go(RouteConstants.homePath);
               },
               child: const Text('Return to Home'),
             ),
