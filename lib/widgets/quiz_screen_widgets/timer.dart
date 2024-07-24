@@ -15,7 +15,7 @@ class TimerWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _TimerWidgetState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
+class _TimerWidgetState extends State<TimerWidget> with WidgetsBindingObserver {
   late int _milisecondsRemaining;
   late double _barWidth;
   int durationMiliseconds = 17;
@@ -24,6 +24,7 @@ class _TimerWidgetState extends State<TimerWidget> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _milisecondsRemaining = widget.durationMiliseconds;
     _barWidth = 1.0;
     startTimer();
@@ -31,8 +32,18 @@ class _TimerWidgetState extends State<TimerWidget> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      _timer?.cancel();
+    } else if (state == AppLifecycleState.resumed) {
+      startTimer();
+    }
   }
 
   void startTimer() {
