@@ -57,7 +57,7 @@ class QuestionProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         notifyListeners();
-        throw Exception("Failed to load the question");
+        throw Exception(AppConstants.loadQuestionErrorMessage);
       }
     } on Exception catch (e) {
       _error = e.toString();

@@ -39,6 +39,6 @@ class QuestionWidgetState extends State<QuestionWidget> {
               Image.network(questionProvider.currentQuestion!.imageUrl),
             ],
           )
-        : const Text("Could not load the question");
+        : const Text(AppConstants.loadQuestionErrorMessage);
   }
 }
