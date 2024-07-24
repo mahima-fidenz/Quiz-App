@@ -14,6 +14,7 @@ class FirebaseProvider extends ChangeNotifier {
 
   bool _loggedIn = false;
   bool get loggedIn => _loggedIn;
+  User? loggedInUser;
 
   StreamSubscription<QuerySnapshot>? _pastQuizzesSubscription;
   List<Quiz> _pastQuizzes = [];
@@ -26,6 +27,7 @@ class FirebaseProvider extends ChangeNotifier {
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
+        loggedInUser = user;
         _loggedIn = true;
         _pastQuizzesSubscription = FirebaseFirestore.instance
             .collection('quizzes')

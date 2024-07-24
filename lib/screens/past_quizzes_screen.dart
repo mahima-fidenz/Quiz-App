@@ -48,7 +48,7 @@ class PastQuizzesScreen extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       title: Text(
-                        'Quiz on ${DateFormat('yMMMMd HH:mm:ss').format((DateTime.fromMicrosecondsSinceEpoch(quiz.timestamp)))}',
+                        'Quiz on ${DateFormat('y MMMM d HH:mm').format((DateTime.fromMillisecondsSinceEpoch(quiz.timestamp)))}',
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.black87,

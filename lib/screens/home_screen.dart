@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_app/providers/firebase_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,8 +24,11 @@ class HomeScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text('Welcome, John Doe!',
-                style: Theme.of(context).textTheme.headlineSmall),
+            Consumer<FirebaseProvider>(builder: (context, firebaseProvider, _) {
+              return Text(
+                  'Welcome, ${firebaseProvider.loggedInUser?.displayName ?? "John Doe"}!',
+                  style: Theme.of(context).textTheme.headlineSmall);
+            }),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
