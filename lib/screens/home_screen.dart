@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(Icons.person),
               onPressed: () {
-                context.go(RouteConstants.profilePath);
+                context.push(RouteConstants.profilePath);
               },
             ),
           ],
