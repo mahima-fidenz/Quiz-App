@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_app/common/route_constants.dart';
+import 'package:quiz_app/common/styles.dart';
 import 'package:quiz_app/providers/firebase_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -44,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           textStyle: const TextStyle(fontSize: 24),
-                          backgroundColor: Colors.yellow),
+                          backgroundColor: CommonStyles.yellowButtonBackground),
                       child: const Text('New Quiz'),
                     ),
                   ),
@@ -58,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           textStyle: const TextStyle(fontSize: 24),
-                          backgroundColor: Colors.yellow),
+                          backgroundColor: CommonStyles.yellowButtonBackground),
                       child: const Text('Past Quizzes'),
                     ),
                   ),

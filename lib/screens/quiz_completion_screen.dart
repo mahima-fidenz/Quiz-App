@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:quiz_app/common/route_constants.dart';
+import 'package:quiz_app/common/styles.dart';
 
 class QuizResultScreen extends StatelessWidget {
   final int fullScore;
@@ -40,7 +41,8 @@ class QuizResultScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: CommonStyles.yellowButtonBackground),
               onPressed: () {
                 context.go(RouteConstants.homePath);
               },
