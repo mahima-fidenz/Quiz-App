@@ -36,7 +36,23 @@ class QuestionWidgetState extends State<QuestionWidget> {
                       'fullScore': questionProvider.fullScore
                     });
                   }),
-              Image.network(questionProvider.currentQuestion!.imageUrl),
+              Image.network(
+                questionProvider.currentQuestion!.imageUrl,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
+              ),
             ],
           )
         : const Text(AppConstants.loadQuestionErrorMessage);
